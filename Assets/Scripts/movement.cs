@@ -49,5 +49,12 @@ public class movement : MonoBehaviour
         }
         dir += Physics.gravity * Time.deltaTime;
         controller.Move(dir * Time.deltaTime);
+
+        // Pasue Game
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.pause();
+        }
+
     }
 }
