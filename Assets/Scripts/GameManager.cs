@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject pauseCanvas;
     //public GameObject player;
     public static GameState state;
+    public static float startTime;
+    private float pauseTime;
 
     // Start is called before the first frame update
     private void Awake()
@@ -36,14 +38,19 @@ public class GameManager : MonoBehaviour
     }
     public static void pause()
     {
+        instance.pauseTime = Time.time;
         state = GameState.Pause;
+
+        Cursor.lockState = CursorLockMode.None;
         instance.pauseCanvas.SetActive(true);
-        //instance.player.SetActive(false);
     }
     public static void resume()
     {
         state = GameState.Playing;
         instance.pauseCanvas.SetActive(false);
+        float totalPauseTime = Time.time - instance.pauseTime;
+        startTime += totalPauseTime;
+        Cursor.lockState = CursorLockMode.Locked;
         //instance.player.SetActive(true);
     }
     public void startGame()
@@ -51,7 +58,19 @@ public class GameManager : MonoBehaviour
         state = GameState.Playing;
         Scene nextScene = SceneManager.GetSceneByName(game1Scene);
         SceneManager.LoadScene(game1Scene);
-        //SceneManager.MoveGameObjectToScene(pauseCanvas, nextScene);
+        Cursor.lockState = CursorLockMode.Locked;
+        startTime = Time.time;
+    }
+    public void backToMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        state = GameState.Menu;
+        SceneManager.LoadScene(menuScene);
+        instance.pauseCanvas.SetActive(false);
+    }
+    public void exit()
+    {
+        Application.Quit();
     }
 }
 

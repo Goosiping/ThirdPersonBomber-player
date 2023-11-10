@@ -16,8 +16,10 @@ public class timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int current = (int)Time.time;
-        //text.text = (current / 60).ToString() + ":" + (current % 60).ToString();
-        text.text = string.Format("{0}:{1:00}", current / 60, current % 60);
+        if(GameManager.state != GameState.Pause)
+        {
+            int current = (int)(Time.time - GameManager.startTime);
+            text.text = string.Format("{0}:{1:00}", current / 60, current % 60);
+        }
     }
 }

@@ -22,7 +22,7 @@ public class movement : MonoBehaviour
     void Update()
     {
 
-        if(controller.isGrounded){
+        if(controller.isGrounded && GameManager.state != GameState.Pause){
             hInput = Input.GetAxis("Horizontal");
             vInput = Input.GetAxis("Vertical");
             dir = transform.forward * vInput * moveSpeed + transform.right * hInput * moveSpeed;
@@ -55,6 +55,6 @@ public class movement : MonoBehaviour
         {
             GameManager.pause();
         }
-
+        a.speed = (GameManager.state == GameState.Pause) ? 0 : 1;
     }
 }

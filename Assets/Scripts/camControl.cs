@@ -15,8 +15,11 @@ public class camControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        xAxis.Update(Time.deltaTime);
-        yAxis.Update(Time.deltaTime);
+        if(GameManager.state != GameState.Pause)
+        {
+            xAxis.Update(Time.deltaTime);
+            yAxis.Update(Time.deltaTime);
+        }
     }
 
     private void LateUpdate() {
